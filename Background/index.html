@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Change Section Background Color</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            transition: background-color 1s ease; /* Smooth color transition */
+        }
+        section {
+            height: 100vh; /* Each section takes up the full viewport height */
+        }
+    </style>
+</head>
+<body>
+
+<section data-color="rgb(255, 99, 71)"></section> <!-- Tomato -->
+<section data-color="rgb(60, 179, 113)"></section> <!-- Medium Sea Green -->
+<section data-color="rgb(30, 144, 255)"></section> <!-- Dodger Blue -->
+
+<script>
+    const sections = document.querySelectorAll('section');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                const newColor = entry.target.getAttribute('data-color');
+                document.body.style.backgroundColor = newColor;
+            }
+        });
+    }, {
+        threshold: 0.5 // Trigger when 50% of the section is in view
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+</script>
+
+</body>
+</html>
